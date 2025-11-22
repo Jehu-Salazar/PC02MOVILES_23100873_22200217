@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
@@ -23,7 +24,8 @@ fun HeaderListadoEquipo(
     modifier: Modifier = Modifier,
     totalEquipos: Int,
     totalTitulos: Int,
-    equipoMasAntiguo: Int
+    equipoMasAntiguo: Int,
+    onNuevoRegistro: () -> Unit
 ) {
     Column(
         modifier = modifier.padding(horizontal = 16.dp, vertical = 8.dp),
@@ -33,21 +35,30 @@ fun HeaderListadoEquipo(
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             StatCard(
-                label = "Total de Equipos",
+                label = "Total de equipos",
                 value = totalEquipos.toString(),
                 modifier = Modifier.weight(1f)
             )
             StatCard(
-                label = "Total de Títulos",
+                label = "Total de títulos",
                 value = totalTitulos.toString(),
                 modifier = Modifier.weight(1f)
             )
         }
-        StatCard(
-            label = "Equipo Más Antiguo",
-            value = equipoMasAntiguo.toString(),
-            modifier = Modifier.fillMaxWidth()
-        )
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            StatCard(
+                label = "Equipo más antiguo",
+                value = equipoMasAntiguo.toString(),
+                modifier = Modifier.weight(1f)
+            )
+            Button(
+                onClick = onNuevoRegistro
+            ) {
+                Text(text = "Nuevo registro")
+            }
+        }
     }
 }
 
@@ -88,7 +99,8 @@ fun HeaderListadoEquipoPreview() {
         HeaderListadoEquipo(
             totalEquipos = 3,
             totalTitulos = 72,
-            equipoMasAntiguo = 1901
+            equipoMasAntiguo = 1901,
+            onNuevoRegistro = {}
         )
     }
 }
