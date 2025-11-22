@@ -26,14 +26,20 @@ data class EquipoUi(
 
 @Composable
 fun ListadoScreen(
-    equipos: List<EquipoUi>
+    equipos: List<EquipoUi>,
+    onNuevoRegistro: () -> Unit = {}
 ) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(top = 16.dp)
     ) {
-        HeaderListado()
+        HeaderListadoEquipo(
+            totalEquipos = equipos.size,
+            totalTitulos = equipos.sumOf { it.titulos },
+            equipoMasAntiguo = equipos.minOfOrNull { it.fundacion } ?: 0,
+            onNuevoRegistro = onNuevoRegistro
+        )
 
         LazyColumn(
             modifier = Modifier
@@ -50,18 +56,6 @@ fun ListadoScreen(
             }
         }
     }
-}
-
-@Composable
-private fun HeaderListado() {
-    Text(
-        text = "Equipos Liga 1",
-        fontSize = 22.sp,
-        fontWeight = FontWeight.Bold,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp)
-    )
 }
 
 @Preview(showBackground = true)
@@ -97,4 +91,3 @@ fun ListadoScreenPreview() {
         }
     }
 }
-

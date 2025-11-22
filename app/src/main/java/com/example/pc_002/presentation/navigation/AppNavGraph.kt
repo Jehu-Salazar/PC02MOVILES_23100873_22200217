@@ -50,7 +50,12 @@ fun AppNavGraph(
                     esEquipoGrande = true
                 )
             )
-            ListadoScreen(equipos = equiposDemo)
+            ListadoScreen(
+                equipos = equiposDemo,
+                onNuevoRegistro = {
+                    navController.navigate(Screen.Registro.route)
+                }
+            )
         }
 
         // composable(Screen.Login.route) { LoginScreen(...) }
