@@ -38,7 +38,9 @@ import com.example.pc_002.ui.theme.Pc_002Theme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RegistroScreen() {
+fun RegistroScreen(
+    onGuardarExitoso: () -> Unit = {}
+) {
     var nombreEquipo by remember { mutableStateOf("") }
     var anioFundacion by remember { mutableStateOf("") }
     var titulosGanados by remember { mutableStateOf("") }
@@ -196,7 +198,8 @@ fun RegistroScreen() {
                     Button(
                         onClick = {
                             if (validateFields()) {
-                                // TODO: guardar datos
+                                // TODO: guardar datos si es necesario
+                                onGuardarExitoso()
                             }
                         },
                         modifier = Modifier
