@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "912041366946",
+    "project_id": "eduvm-android2",
+    "storage_bucket": "eduvm-android2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:912041366946:android:b1cd0abf53253cd5108efb",
+        "android_client_info": {
+          "package_name": "com.eduardo.pc2moviles"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcIrxDLm-gBH7Kn4TtGuh1OCN7-E5XJPY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
