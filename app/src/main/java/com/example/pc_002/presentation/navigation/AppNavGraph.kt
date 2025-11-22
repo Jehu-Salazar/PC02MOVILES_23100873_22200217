@@ -5,9 +5,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-
+import com.example.pc_002.presentation.registro.RegistroScreen
 
 sealed class Screen(val route: String) {
+    data object Registro : Screen("registro")
     data object Login : Screen("login")
     // Agrega aquí más pantallas: Home, Details, etc.
 }
@@ -18,10 +19,12 @@ fun AppNavGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Screen.Login.route
+        startDestination = Screen.Registro.route
     ) {
-        composable(Screen.Login.route) {
-
+        composable(Screen.Registro.route) {
+            RegistroScreen()
         }
+
+        // composable(Screen.Login.route) { LoginScreen(...) }
     }
 }
