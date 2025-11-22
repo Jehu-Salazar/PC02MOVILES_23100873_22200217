@@ -1,6 +1,5 @@
 package com.example.pc_002.presentation.registro
 
-import android.util.Patterns
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -49,7 +48,6 @@ fun RegistroScreen(
     var nombreError by remember { mutableStateOf<String?>(null) }
     var anioError by remember { mutableStateOf<String?>(null) }
     var titulosError by remember { mutableStateOf<String?>(null) }
-    var urlError by remember { mutableStateOf<String?>(null) }
 
     fun validateFields(): Boolean {
         nombreError = if (nombreEquipo.isBlank()) "El nombre no puede estar vacío" else null
@@ -63,13 +61,8 @@ fun RegistroScreen(
             titulosGanados.toIntOrNull() == null -> "Debe ser un número"
             else -> null
         }
-        urlError = when {
-            urlImagen.isBlank() -> "La URL no puede estar vacía"
-            !Patterns.WEB_URL.matcher(urlImagen).matches() -> "URL inválida"
-            else -> null
-        }
 
-        return nombreError == null && anioError == null && titulosError == null && urlError == null
+        return nombreError == null && anioError == null && titulosError == null
     }
 
     Scaffold(
@@ -178,19 +171,10 @@ fun RegistroScreen(
 
                     OutlinedTextField(
                         value = urlImagen,
-                        onValueChange = {
-                            urlImagen = it
-                            urlError = null
-                        },
+                        onValueChange = { urlImagen = it },
                         label = { Text("URL de la imagen del equipo") },
                         placeholder = { Text("https://ejemplo.com/logo-equipo.png") },
-                        modifier = Modifier.fillMaxWidth(),
-                        isError = urlError != null,
-                        supportingText = {
-                            if (urlError != null) {
-                                Text(text = urlError!!)
-                            }
-                        }
+                        modifier = Modifier.fillMaxWidth()
                     )
 
                     Spacer(modifier = Modifier.height(24.dp))
@@ -198,7 +182,6 @@ fun RegistroScreen(
                     Button(
                         onClick = {
                             if (validateFields()) {
-                                // TODO: guardar datos si es necesario
                                 onGuardarExitoso()
                             }
                         },
@@ -225,3 +208,4 @@ fun RegistroScreenPreview() {
         RegistroScreen()
     }
 }
+
