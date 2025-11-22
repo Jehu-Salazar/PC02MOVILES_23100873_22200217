@@ -8,13 +8,13 @@ plugins {
 }
 
 android {
-    namespace = "com.example.pc_002"
+    namespace = "com.eduardo.pc2moviles"
     compileSdk {
         version = release(36)
     }
 
     defaultConfig {
-        applicationId = "com.example.pc_002"
+        applicationId = "com.eduardo.pc2moviles"
         minSdk = 24
         targetSdk = 36
         versionCode = 1
@@ -46,11 +46,15 @@ android {
 
 dependencies {
     // Import the Firebase BoM
-    implementation(platform("com.google.firebase:firebase-bom:34.6.0"))
+    implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
 
     // Add the dependencies for Firebase products you want to use
     // When using the BoM, don't specify versions in Firebase dependencies
     implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-firestore-ktx")
+
+    // Coil para cargar imágenes desde URL
+    implementation("io.coil-kt:coil-compose:2.5.0")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

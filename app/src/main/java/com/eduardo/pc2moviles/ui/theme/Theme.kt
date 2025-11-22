@@ -1,4 +1,4 @@
-package com.example.pc_002.ui.theme
+package com.eduardo.pc2moviles.ui.theme
 
 import android.app.Activity
 import android.os.Build

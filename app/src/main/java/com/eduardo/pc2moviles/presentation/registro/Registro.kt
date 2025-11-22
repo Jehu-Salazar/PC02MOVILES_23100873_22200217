@@ -1,4 +1,4 @@
-package com.example.pc_002.presentation.registro
+package com.eduardo.pc2moviles.presentation.registro
 
 import android.util.Patterns
 import androidx.compose.foundation.layout.Arrangement
@@ -15,6 +15,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -26,6 +27,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,11 +36,19 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.pc_002.ui.theme.Pc_002Theme
+import com.eduardo.pc2moviles.data.model.Equipo
+import com.eduardo.pc2moviles.data.repository.EquipoRepository
+import com.eduardo.pc2moviles.ui.theme.Pc_002Theme
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RegistroScreen() {
+fun RegistroScreen(
+    onRegistroExitoso: () -> Unit = {}
+) {
+    val repository = remember { EquipoRepository() }
+    val scope = rememberCoroutineScope()
+
     var nombreEquipo by remember { mutableStateOf("") }
     var anioFundacion by remember { mutableStateOf("") }
     var titulosGanados by remember { mutableStateOf("") }
@@ -48,6 +58,9 @@ fun RegistroScreen() {
     var anioError by remember { mutableStateOf<String?>(null) }
     var titulosError by remember { mutableStateOf<String?>(null) }
     var urlError by remember { mutableStateOf<String?>(null) }
+
+    var isLoading by remember { mutableStateOf(false) }
+    var errorMessage by remember { mutableStateOf<String?>(null) }
 
     fun validateFields(): Boolean {
         nombreError = if (nombreEquipo.isBlank()) "El nombre no puede estar vacío" else null
@@ -193,10 +206,36 @@ fun RegistroScreen() {
 
                     Spacer(modifier = Modifier.height(24.dp))
 
+                    if (errorMessage != null) {
+                        Text(
+                            text = errorMessage!!,
+                            color = MaterialTheme.colorScheme.error,
+                            modifier = Modifier.padding(bottom = 8.dp)
+                        )
+                    }
+
                     Button(
                         onClick = {
                             if (validateFields()) {
-                                // TODO: guardar datos
+                                isLoading = true
+                                errorMessage = null
+                                val equipo = Equipo(
+                                    nombre = nombreEquipo,
+                                    anioFundacion = anioFundacion.toInt(),
+                                    titulosGanados = titulosGanados.toInt(),
+                                    imagenUrl = urlImagen
+                                )
+                                scope.launch {
+                                    repository.guardarEquipo(equipo)
+                                        .onSuccess {
+                                            isLoading = false
+                                            onRegistroExitoso()
+                                        }
+                                        .onFailure { e ->
+                                            isLoading = false
+                                            errorMessage = "Error al guardar: ${e.message}"
+                                        }
+                                }
                             }
                         },
                         modifier = Modifier
@@ -205,9 +244,17 @@ fun RegistroScreen() {
                         colors = ButtonDefaults.buttonColors(
                             containerColor = MaterialTheme.colorScheme.primary
                         ),
-                        shape = MaterialTheme.shapes.medium
+                        shape = MaterialTheme.shapes.medium,
+                        enabled = !isLoading
                     ) {
-                        Text(text = "Guardar equipo", fontSize = 16.sp)
+                        if (isLoading) {
+                            CircularProgressIndicator(
+                                color = MaterialTheme.colorScheme.onPrimary,
+                                modifier = Modifier.height(24.dp)
+                            )
+                        } else {
+                            Text(text = "Guardar equipo", fontSize = 16.sp)
+                        }
                     }
                 }
             }

@@ -1,4 +1,4 @@
-package com.example.pc_002.presentation.listadoScreen
+package com.eduardo.pc2moviles.presentation.listadoScreen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -19,11 +19,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.pc_002.ui.theme.Pc_002Theme
+import coil.compose.AsyncImage
+import com.eduardo.pc2moviles.ui.theme.Pc_002Theme
 
 @Composable
 fun CardEquipos(
@@ -43,19 +45,30 @@ fun CardEquipos(
         colors = CardDefaults.cardColors(containerColor = Color(0xFFF8F8F8))
     ) {
         Column {
-            // Placeholder de imagen (sin dependencias extra)
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(200.dp)
-                    .background(Color(0xFFE0E0E0)),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = "Imagen del equipo",
-                    color = Color.DarkGray,
-                    fontSize = 14.sp
+            // Imagen del equipo con Coil
+            if (imageUrl.isNotBlank()) {
+                AsyncImage(
+                    model = imageUrl,
+                    contentDescription = "Logo de $nombre",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp),
+                    contentScale = ContentScale.Crop
                 )
+            } else {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp)
+                        .background(Color(0xFFE0E0E0)),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "Sin imagen",
+                        color = Color.DarkGray,
+                        fontSize = 14.sp
+                    )
+                }
             }
 
             Column(modifier = Modifier.padding(16.dp)) {

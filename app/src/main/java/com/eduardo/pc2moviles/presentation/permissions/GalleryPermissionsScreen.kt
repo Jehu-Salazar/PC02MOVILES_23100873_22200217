@@ -1,4 +1,4 @@
-package com.example.pc_002.presentation.permissions
+package com.eduardo.pc2moviles.presentation.permissions
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize

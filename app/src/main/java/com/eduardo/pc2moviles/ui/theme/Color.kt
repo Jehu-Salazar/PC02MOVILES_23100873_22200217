@@ -1,4 +1,4 @@
-package com.example.pc_002.ui.theme
+package com.eduardo.pc2moviles.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

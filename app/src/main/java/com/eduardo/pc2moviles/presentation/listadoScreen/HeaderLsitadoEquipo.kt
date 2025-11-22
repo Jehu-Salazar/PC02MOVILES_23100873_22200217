@@ -1,4 +1,4 @@
-package com.example.pc_002.presentation.listadoScreen
+package com.eduardo.pc2moviles.presentation.listadoScreen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,7 +16,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.pc_002.ui.theme.Pc_002Theme
+import com.eduardo.pc2moviles.ui.theme.Pc_002Theme
 
 @Composable
 fun HeaderListadoEquipo(
